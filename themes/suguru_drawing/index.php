@@ -5,13 +5,13 @@
       'meta_key' => 'post_views_count',
       'orderby' => 'meta_value_num',
       'order'=>'DESC',
-      'posts_per_page' => 20,
+      'posts_per_page' => 10,
     );
 
     $the_pop_query = new WP_Query( $args );
 
     $args = array(
-      'posts_per_page' => 10,
+      'posts_per_page' => -1,
       'order'          => 'DESC',
       'orderby'        => 'date'
       );
@@ -23,116 +23,55 @@
 ?>
 <div class="container">
   <div class="contents">
-    <div class="menu-sub">
-      <div class="menu-sub-list">
-        <ul>
-          <li class="pops selected">人気順</li>
-          <li class="news">新着順</li>
-        </ul>
-      </div>
+    <div class="menu-sub-list">
+        <a href="/" class="selected">人気順</a>
+        <a href="/top-new">新着順</a>
     </div>
     <div class="advertisement-area">
       Advertisement
     </div>
-    <?php if($the_pop_query->have_posts()):?>
+    <section id="content" class="main">
       <?php while($the_pop_query->have_posts()): $the_pop_query->the_post();?>
-      <?php // テンプレートの判定
-          $image_url_list = [];
-          $temp_name = get_post_meta($post->ID, '_wp_page_template', true);
-          if ($temp_name === 'single-1koma.php'){
-            $image_url_list[] = get_field('1koma_img', $post->ID)['url'];
-          }elseif($temp_name === 'single-2koma.php'){
-            $image_url_list[] = get_field('2koma_img_title', $post->ID)['url'];
-            $image_url_list[] = get_field('2koma_img_1st', $post->ID)['url'];
-            $image_url_list[] = get_field('2koma_img_2nd', $post->ID)['url'];
-          }elseif($temp_name === 'single-3koma.php'){
-            $image_url_list[] = get_field('3koma_img_title', $post->ID)['url'];
-            $image_url_list[] = get_field('3koma_img_1st', $post->ID)['url'];
-            $image_url_list[] = get_field('3koma_img_2nd', $post->ID)['url'];
-            $image_url_list[] = get_field('3koma_img_3rd', $post->ID)['url'];
-          }elseif($temp_name === 'single-4koma.php'){
-            $image_url_list[] = get_field('4koma_img_title', $post->ID)['url'];
-            $image_url_list[] = get_field('4koma_img_1st', $post->ID)['url'];
-            $image_url_list[] = get_field('4koma_img_2nd', $post->ID)['url'];
-            $image_url_list[] = get_field('4koma_img_3rd', $post->ID)['url'];
-            $image_url_list[] = get_field('4koma_img_4th', $post->ID)['url'];
-          }
-          ?>
-
-        <?php if($pop_count < 5){ ?>
-          <div class="painting-area pop-images">
-        <?php }else{?>
-          <div class="painting-area pop-images display-none">
-        <?php } ?>
-          <a class="link-area" href="<?php echo get_permalink()?>">
-            <div class="image"><img class="neta-img" src="<?php echo $image_url_list[0];?>" alt="<?php echo $post->post_title;?>"></div>
-            <div class="painting-title"><?php echo $post->post_title;?></div>
-          </a>
-          <div class="like-area">
-            <div class="view-cnt">
-              <p><i class="fas fa-eye"></i> <?php echo getPostViews();?> views</div>
-              </p>
-          </div>
-        </div>
-      <?php
-          $pop_count++; 
-          endwhile; ?>
-    <?php endif; ?>
-    <?php if(!empty($the_new_query)){?>
-      <?php foreach($the_new_query as $post){?>
         <?php // テンプレートの判定
-          $image_url_list = [];
+          $image_url = '';
           $temp_name = get_post_meta($post->ID, '_wp_page_template', true);
           if ($temp_name === 'single-1koma.php'){
-            $image_url_list[] = get_field('1koma_img', $post->ID)['url'];
+            $image_url = get_field('1koma_img', $post->ID)['url'];
           }elseif($temp_name === 'single-2koma.php'){
-            $image_url_list[] = get_field('2koma_img_title', $post->ID)['url'];
-            $image_url_list[] = get_field('2koma_img_1st', $post->ID)['url'];
-            $image_url_list[] = get_field('2koma_img_2nd', $post->ID)['url'];
+            $image_url = get_field('2koma_img_title', $post->ID)['url'];
           }elseif($temp_name === 'single-3koma.php'){
-            $image_url_list[] = get_field('3koma_img_title', $post->ID)['url'];
-            $image_url_list[] = get_field('3koma_img_1st', $post->ID)['url'];
-            $image_url_list[] = get_field('3koma_img_2nd', $post->ID)['url'];
-            $image_url_list[] = get_field('3koma_img_3rd', $post->ID)['url'];
+            $image_url = get_field('3koma_img_title', $post->ID)['url'];
           }elseif($temp_name === 'single-4koma.php'){
-            $image_url_list[] = get_field('4koma_img_title', $post->ID)['url'];
-            $image_url_list[] = get_field('4koma_img_1st', $post->ID)['url'];
-            $image_url_list[] = get_field('4koma_img_2nd', $post->ID)['url'];
-            $image_url_list[] = get_field('4koma_img_3rd', $post->ID)['url'];
-            $image_url_list[] = get_field('4koma_img_4th', $post->ID)['url'];
+            $image_url = get_field('4koma_img_title', $post->ID)['url'];
           }
           ?>
-        <?php if($new_count < 5){ ?>
-          <div class="painting-area new-images">
-        <?php }else{?>
-          <div class="painting-area new-images display-none">
-        <?php } ?>
-          <a class="link-area" href="<?php echo get_permalink($post)?>">
-            <div class="image"><img class="neta-img" src="<?php echo $image_url_list[0];?>" alt="<?php echo $post->post_title;?>"></div>
-            <div class="painting-title"><?php echo $post->post_title;?></div>
-          </a>
-          <div class="like-area">
-            <div class="view-cnt">
-              <p><i class="fas fa-eye"></i> <?php echo getPostViews();?> views</div>
-              </p>
+          <div class="painting-area">
+            <a class="link-area" href="<?php echo get_permalink($post->ID);?>">
+              <div class="image"><img class="neta-img" src="<?php echo $image_url;?>" alt="<?php echo get_the_title($post->ID);?>"></div>
+              <div class="painting-title"><?php echo get_the_title($post->ID);?></div>
+            </a>
+            <div class="like-area">
+              <div class="view-cnt">
+                <p><i class="fas fa-eye"></i> <?php echo getPostViews();?> views
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-      <?php 
-            $new_count++;
-            }?>
-    <?php }?>
-    <div class="more-btn-top">
-      ▽　　もっとみる　　▽
-    </div>
+      <?php endwhile; ?>
+      <?php if(count($the_pop_query->posts) === 10):?>
+      <div class="more-btn-top more-button">
+        ▽　　もっとみる　　▽
+      </div>
+      <?php endif;?>
+      <?php wp_reset_query(); ?>
+</section>
+
+
+
     <div class="advertisement-area-under">
       Advertisement
     </div>
-    <div class="suguru-inst">
-      <div class="pic">
-        <img src="<?php echo get_stylesheet_directory_uri();?>/resources/images/icon.jpg " >
-      </div>
-      <p class="text">芸人の紹介</p>
-    </div>
+    <?php require_once locate_template('/inst-parts.php', true);?>
   </div><!--end contents-->
 </div><!--end container-->
 <?php get_footer(); ?>

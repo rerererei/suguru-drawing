@@ -25,7 +25,7 @@ Template Post Type: post
       <div class="painting-title"><?php echo $post->post_title;?></div>
       <div class="like-area">
         <div class="view-cnt">
-          <p><i class="fas fa-eye"></i><?php echo getPostViews($post->ID);?> view</div>
+          <p><i class="fas fa-eye"></i> <?php echo getPostViews($post->ID);?> view</div>
           </p>
       </div>
     </div>
@@ -40,7 +40,17 @@ Template Post Type: post
         <div class="previous-img">◀︎</div>
         <div class="next-text"><?php echo get_the_title($nextpost->ID);?></div>
         <div class="next-detail">
-            <img src="<?php echo get_field('1koma_img', $nextpost->ID)['url'];?>" alt="">
+        <?php if(get_post_meta( $nextpost->ID , '_wp_page_template', true ) === 'single-1koma.php' ){
+                    $next_slug = '1koma_img';
+                  }elseif(get_post_meta( $nextpost->ID , '_wp_page_template', true ) === 'single-2koma.php' ){
+                    $next_slug = '2koma_img_title';
+                  }elseif(get_post_meta( $nextpost->ID , '_wp_page_template', true ) === 'single-3koma.php' ){
+                    $next_slug = '3koma_img_title';
+                  }elseif(get_post_meta( $nextpost->ID , '_wp_page_template', true ) === 'single-4koma.php' ){
+                    $next_slug = '4koma_img_title';
+                  }
+            ?>
+            <img src="<?php echo get_field($next_slug, $nextpost->ID)['url'];?>" alt="">
         </div>
         </div>
     </a>
@@ -50,90 +60,64 @@ Template Post Type: post
     <a href="<?php echo get_permalink($prevpost->ID)?>">
         <div class="previous-post">
         <div class="previous-detail">
-            <img src="<?php echo get_field('1koma_img', $prevpost->ID)['url'];?>" alt="">
+        <?php if(get_post_meta( $prevpost->ID , '_wp_page_template', true ) === 'single-1koma.php' ){
+                    $prev_slug = '1koma_img';
+                  }elseif(get_post_meta( $prevpost->ID , '_wp_page_template', true ) === 'single-2koma.php' ){
+                    $prev_slug = '2koma_img_title';
+                  }elseif(get_post_meta( $prevpost->ID , '_wp_page_template', true ) === 'single-3koma.php' ){
+                    $prev_slug = '3koma_img_title';
+                  }elseif(get_post_meta( $prevpost->ID , '_wp_page_template', true ) === 'single-4koma.php' ){
+                    $prev_slug = '4koma_img_title';
+                  }
+
+            ?>
+            <img src="<?php echo get_field($prev_slug, $prevpost->ID)['url'];?>" alt="">
         </div>
         <div class="previous-text"><?php echo get_the_title($prevpost->ID);?></div>
         <div class="next-img">▶︎</div>
         </div>
     </a>
-  <?php }?>    <h2>
+  <?php }?>
+     <h2>
       まだ見ていく？
     </h2>
+    <?php
+      $query = <<<SQL
+SELECT post.ID, post.post_title 
+FROM $wpdb->posts as post
+left join 
+$wpdb->postmeta as meta1
+on
+post.id = meta1.post_id
+where
+post.post_status = 'publish'
+and
+post.post_type = 'post'
+and
+meta1.meta_value = 'single-2koma.php'
+order by post.post_date desc
+limit 10
+SQL;
+      $recommend_post = $wpdb->get_results($query);
+    ?>
     <ul class="recommend-posts">
-      <li class="recommend-post">
-        <div class="recommend-image"><img src="<?php echo get_stylesheet_directory_uri();?>/resources/images/image1.png" alt=""></div>
-        <div class="recommend-title">水で増えるタイプ</div>
-      </li>
-      <li class="recommend-post">
-        <div class="recommend-image"><img src="<?php echo get_stylesheet_directory_uri();?>/resources/images/image1.png" alt=""></div>
-        <div class="recommend-title">水で増えるタイプ</div>
-      </li>
-      <li class="recommend-post">
-        <div class="recommend-image"><img src="<?php echo get_stylesheet_directory_uri();?>/resources/images/image1.png" alt=""></div>
-        <div class="recommend-title">水で増えるタイプ</div>
-      </li>
-      <li class="recommend-post">
-        <div class="recommend-image"><img src="<?php echo get_stylesheet_directory_uri();?>/resources/images/image1.png" alt=""></div>
-        <div class="recommend-title">水で増えるタイプ</div>
-      </li>
-      <li class="recommend-post">
-        <div class="recommend-image"><img src="<?php echo get_stylesheet_directory_uri();?>/resources/images/image1.png" alt=""></div>
-        <div class="recommend-title">水で増えるタイプ</div>
-      </li>
-      <li class="recommend-post">
-        <div class="recommend-image"><img src="<?php echo get_stylesheet_directory_uri();?>/resources/images/image1.png" alt=""></div>
-        <div class="recommend-title">水で増えるタイプ</div>
-      </li>
-
+    <?php 
+      foreach( $recommend_post as $post ){
+        ?>
+        <a class="recommend-post" href="<?php echo get_permalink($post->ID);?>">
+          <li>
+            <div class="recommend-image"><img src="<?php echo get_field('2koma_img_title', $post->ID)['sizes']['medium'];?>" alt="<?php echo $post->post_title ?>"></div>
+            <div class="recommend-title"><?php echo $post->post_title ?></div>
+          </li>
+      </a>
+      <?php
+        }
+      ?>
     </ul>
-    <h2>
-      人気急上昇のやつ
-    </h2>
-    <ul class="popular-posts">
-    <li class="popular-post">
-        <div class="popular-image"><img src="<?php echo get_stylesheet_directory_uri();?>/resources/images/image1.png" alt=""></div>
-        <div class="popular-text">
-          <div class="popular-title">水で増えるタイプ</div>
-          <div class="popular-like">1,500</div>
-        </div>
-      </li>
-      <li class="popular-post">
-        <div class="popular-image"><img src="<?php echo get_stylesheet_directory_uri();?>/resources/images/image1.png" alt=""></div>
-        <div class="popular-text">
-          <div class="popular-title">水で増えるタイプ</div>
-          <div class="popular-like">1,500</div>
-        </div>
-      </li>
-      <li class="popular-post">
-        <div class="popular-image"><img src="<?php echo get_stylesheet_directory_uri();?>/resources/images/image1.png" alt=""></div>
-        <div class="popular-text">
-          <div class="popular-title">水で増えるタイプ</div>
-          <div class="popular-like">1,500</div>
-        </div>
-      </li>
-      <li class="popular-post">
-        <div class="popular-image"><img src="<?php echo get_stylesheet_directory_uri();?>/resources/images/image1.png" alt=""></div>
-        <div class="popular-text">
-          <div class="popular-title">水で増えるタイプ</div>
-          <div class="popular-like">1,500</div>
-        </div>
-      </li>
-      <li class="popular-post">
-        <div class="popular-image"><img src="<?php echo get_stylesheet_directory_uri();?>/resources/images/image1.png" alt=""></div>
-        <div class="popular-text">
-          <div class="popular-title">水で増えるタイプ</div>
-          <div class="popular-like">1,500</div>
-        </div>
-      </li>
-    </ul>
+    <?php require_once locate_template('/recommend_image.php', true);?>
     <div class="advertisement-area">
       Advertisement
     </div>
-
-    <form id="search-form" action="#">
-      <input id="sbox5"  id="s" name="s" type="text" placeholder="キーワードを入力" />
-      <input id="sbtn5" type="submit" value="検索" />
-    </form>
   </div><!--end contents-->
 </div><!--end container-->
 <?php get_footer(); ?>

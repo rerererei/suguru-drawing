@@ -1,6 +1,7 @@
 .header-fixed{
     position: fixed;
     width: 100%;
+    z-index: 9999;
 }
 .header-inner{
     display:flex;
@@ -17,14 +18,14 @@
 }
 .header-inner .top-circle{
     border-radius: 50%;
-    height: 50px;
+    height: 43px;
 }
 .header-inner .site-title{
     text-align: center;
     width: 75%;    
 }
 .header-inner .site-title a{
-    font-size: 15px;
+    font-size: 16px;
     color: white;
 }
 
@@ -72,11 +73,11 @@ ul.header-menu li.selected a{
     width:100%;
     background-color: white;
 }
-.menu-sub-list ul {
+.menu-sub-list {
     display: flex;
     width:100%
 }
-.menu-sub-list li {
+.menu-sub-list a {
     font-size: 11px;
     width: calc(100% / 2);
     text-align: center;
@@ -88,7 +89,7 @@ ul.header-menu li.selected a{
     color: gray;
     border-radius: 10px;
 }
-.menu-sub-list li.selected {
+.menu-sub-list a.selected {
     border-color: #E06666 !important;
     background-color: #E06666 !important;
     color: white;
@@ -143,6 +144,10 @@ ul.header-menu li.selected a{
 }
 
 .like-area div.view-cnt p{
+    color: #E06666;
+    border-bottom: dotted 2px #E06666;
+}
+.popular-like{
     color: #E06666;
     border-bottom: dotted 2px #E06666;
 }
@@ -233,6 +238,7 @@ ul.header-menu li.selected a{
 }
 .next-detail{
     width: 33%;
+    text-align: right;
 }
 .next-detail img{
     height: -webkit-fill-available;
@@ -283,7 +289,10 @@ h2 {
     padding: 10px;
 }
 
-.popular-posts .popular-post:not(:last-child) {
+.popular-posts .popular-post .popular-image{
+    width: 40%;
+}
+.popular-posts .popular-post {
     border-bottom: dashed;
     border-width: thin;
     border-color: #E06666;
@@ -319,9 +328,6 @@ a.no-color-change:hover,
 a.no-color-change:active {
     color: #333;
     text-decoration: none;;
-}
-.new-images{
-    display: none;
 }
 .display-none{
     display: none;

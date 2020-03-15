@@ -14,7 +14,10 @@ function setPostViews() {
     $post_id = get_the_ID();
     $custom_key = 'post_views_count';
     $view_count = get_post_meta($post_id, $custom_key, true);  //現在のビュー数を取得
+    $recommend_view_count = get_post_meta($post_id, 'pv_count_monthly', true);  //現在のビュー数を取得
     //すでにメタデータがあるかどうかで処理を分ける
+    $recommend_view_count++;
+    update_post_meta($post_id, 'pv_count_monthly', $recommend_view_count);
     if ($view_count === '') {
         delete_post_meta($post_id, $custom_key);
         add_post_meta($post_id, $custom_key, '0');

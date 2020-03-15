@@ -7,6 +7,7 @@ Description: suguru-drawing theme
 version： 2.0.0
 */
 
+ 
 /*cssのリセット*/
 html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,
 blockquote,pre,abbr,address,cite,code,del,dfn,em,img,
@@ -120,9 +121,14 @@ html {
     font-size: 16px;
 }
 
+@font-face{ 
+  font-family: 'Suguru-font';
+  src: url('https://test1.deaitaiken-st.info/wp-includes/fonts/suguru-font.woff') format('woff'),
+url('https://test1.deaitaiken-st.info/wp-includes/fonts/suguru-font.eot') format('eot');
+}
 body {
     /*フォントの指定*/
-    font-family: 'メイリオ', 'Meiryo', 'ヒラギノ角ゴ Pro', 'Hiragino Kaku Gothic Pro', 'Noto Sans Japanese', Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+    font-family: 'Suguru-font';
     /*行間の指定*/
     line-height: 1.4;
     margin: 0;
@@ -149,14 +155,17 @@ img {
  
 header{background-color: #888;}
  
-.header-inner{ background-color: #E06666; height: 50px;}
+.header-inner{ 
+	background-color: #E06666;
+	height: 45px;
+}
  
 .container {
-  background-color: #FFEEEE; 
+	background-color: #FFEEEE; 
 }
  
 .contents {
-  margin-top:80px;
+	margin-top:80px;
 }
  
 #sidebar{background-color: #aefffc; }

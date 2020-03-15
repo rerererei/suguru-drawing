@@ -9,8 +9,8 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/resources/css/suguru-top.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous"><!--font-awesomeのスタイルシートの呼び出し-->
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/css/swiper.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/js/swiper.min.js"></script>
+<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/resources/css/slick.min.js"></script>
+<script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
 
 <?php wp_head();
 global $template;?>
@@ -20,15 +20,15 @@ $selected_1 = '';
 $selected_2 = '';
 $selected_3 = '';
 $selected_4 = '';
-if(basename($template) === 'index.php'){
+if(basename($template) === 'index.php' || basename($template) === 'page-top_new.php'){
     $selected_all = 'selected';
-}elseif(basename($template) === 'single-1koma.php' || basename($template) === 'page-1koma_list.php'){
+}elseif(basename($template) === 'single-1koma.php' || basename($template) === 'page-1koma_list.php' || basename($template) === 'page-1koma_list_new.php'){
     $selected_1 = 'selected';
-}elseif(basename($template) === 'single-2koma.php' || basename($template) === 'page-2koma_list.php'){
+}elseif(basename($template) === 'single-2koma.php' || basename($template) === 'page-2koma_list.php' || basename($template) === 'page-2koma_list_new.php'){
     $selected_2 = 'selected';
-}elseif(basename($template) === 'single-3koma.php' || basename($template) === 'page-3koma_list.php'){
+}elseif(basename($template) === 'single-3koma.php' || basename($template) === 'page-3koma_list.php' || basename($template) === 'page-3koma_list_new.php'){
     $selected_3 = 'selected';
-}elseif(basename($template) === 'single-4koma.php' || basename($template) === 'page-4koma_list.php'){
+}elseif(basename($template) === 'single-4koma.php' || basename($template) === 'page-4koma_list.php' || basename($template) === 'page-4koma_list_new.php'){
     $selected_4 = 'selected';
 }
 ?>
@@ -43,7 +43,7 @@ if(basename($template) === 'index.php'){
                     <img src="<?php echo get_stylesheet_directory_uri();?>/resources/images/icon.jpg" class="top-circle">
                 </a>
             </div>
-            <div class="site-title"><a href="<?php echo home_url()?>">すぐる画伯のほのぼのマンガ</a></div>
+            <h1 class="site-title"><a href="<?php echo home_url()?>">すぐる画伯のほのぼのマンガ</a></h1>
         </div><!--end header-inner-->
         <ul class="header-menu">
             <li class="menu-all <?php echo $selected_all?>"><a href="<?php echo esc_url(home_url()) ?>">すべて</a></li>
